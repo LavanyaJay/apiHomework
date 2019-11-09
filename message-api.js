@@ -12,8 +12,6 @@ app.use(movieRouter);
 let count = 0;
 
 function countMiddleware(req, res, next) {
-	console.log("count,", count);
-	console.log(next);
 	count++;
 	if (count > 5) {
 		return res.status(429).send({
@@ -27,8 +25,6 @@ function countMiddleware(req, res, next) {
 app.use(countMiddleware);
 
 app.post("/messages", (req, res, next) => {
-	console.log("post", req.body);
-
 	if (!req.body.hasOwnProperty("text")) {
 		return res.status(400).send({
 			success: false,

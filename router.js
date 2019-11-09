@@ -2,10 +2,14 @@ const { Router } = require("express");
 const router = new Router();
 const Movie = require("./sequelize-rest");
 
-router.get("/movie", (req, res, next) => {
-	Movie.findAll()
-		.then(movie => res.send(movie))
-		.catch(err => next(err));
+router.get("/movie?", (req, res, next) => {
+	const limit = req.query.limit || 10;
+	const offset = req.query.offset || 0;
+	Movie.findAndCountAll({ limit, offset })
+		.then(movie =>
+			res.send({ movies: movie.rows, total: movie.count, offset: movie.offset })
+		)
+		.catch(error => next(error));
 });
 
 router.get("/movie/:movieId", (req, res, next) => {
