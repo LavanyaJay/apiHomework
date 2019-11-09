@@ -2,6 +2,10 @@ const express = require("express");
 const app = express();
 port = 3000;
 
+const cors = require("cors");
+const corsMiddleware = cors();
+app.use(corsMiddleware);
+
 const bodyParser = require("body-parser");
 const jsonParser = bodyParser.json();
 app.use(jsonParser);
@@ -28,7 +32,7 @@ app.post("/messages", (req, res, next) => {
 	if (!req.body.hasOwnProperty("text")) {
 		return res.status(400).send({
 			success: false,
-			message: "Text property does not exist"
+			message: "message property does not exist"
 		});
 	}
 	if (req.body.text === "") {
@@ -38,7 +42,8 @@ app.post("/messages", (req, res, next) => {
 		});
 	}
 
-	res.send(req.body.text);
+	console.log(req.body.text);
+	res.send({ message: req.body.text });
 });
 
 app.listen(port, () => {
