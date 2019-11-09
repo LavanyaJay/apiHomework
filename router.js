@@ -16,7 +16,7 @@ router.get("/movie/:movieId", (req, res, next) => {
 	Movie.findByPk(parseInt(req.params.movieId))
 		.then(movie => {
 			if (!movie) {
-				return res.status(404).send();
+				return res.status(404).send({ message: "Record Not found" });
 			} else {
 				res.send(movie);
 			}
@@ -27,7 +27,7 @@ router.get("/movie/:movieId", (req, res, next) => {
 router.post("/movie", (req, res, next) => {
 	//Validate if content to post exist
 	if (Object.keys(req.body).length === 0) {
-		return res.status(204).send();
+		return res.status(204).send({ message: "No content provided" });
 	}
 
 	//Initialize properties when content not provided
@@ -56,7 +56,7 @@ router.patch("/movie/:movieId", (req, res, next) => {
 	Movie.findByPk(parseInt(req.params.movieId))
 		.then(movie => {
 			if (!movie) {
-				return res.status(404).send();
+				return res.status(404).send({ message: "record not found" });
 			}
 			if (Object.keys(req.body).length === 0) {
 				return res.status(204).send();
