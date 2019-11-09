@@ -6,6 +6,9 @@ const bodyParser = require("body-parser");
 const jsonParser = bodyParser.json();
 app.use(jsonParser);
 
+const movieRouter = require("./router");
+app.use(movieRouter);
+
 let count = 0;
 
 function countMiddleware(req, res, next) {
